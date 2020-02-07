@@ -53,7 +53,7 @@ namespace Localizator
                     "\\Assets\\StreamingAssets\\Localization\\ru.json не была обнаружена. Проверьте путь к root проекта." +
                     "\n \n Нажмите на кнопочку Path и введите корректный путь до проекта.",
                     "Некорретный путь к проекту",
-                    MessageBoxButton.OK, MessageBoxImage.Stop);
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             MakeList();
         }
@@ -233,7 +233,7 @@ namespace Localizator
                 foreach (var key2 in item.Keys)
                 {
                     jsonText += "\n    ";
-                    jsonText += "\""+key2+"\":\""+item[key2]+"\"";
+                    jsonText += "\""+key2+"\":\""+@item[key2].Replace("\"", "\\\"")+"\"";
                     if (i2 < item.Count - 1)
                     {
                         jsonText += ",";
