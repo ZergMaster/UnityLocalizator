@@ -155,17 +155,18 @@ namespace Localizator
 
         private void SaveLoc()
         {
-            string jsonText = "{";
+            string jsonText = "{\n";
 
             var i = 0;
             foreach (var key1 in _locData.Keys)
             {
-                jsonText += "\""+key1+"\":{";
+                jsonText += "  \""+key1+"\": {";
 
                 var i2 = 0;
                 var item = _locData[key1];
                 foreach (var key2 in item.Keys)
                 {
+                    jsonText += "\n    ";
                     jsonText += "\""+key2+"\":\""+item[key2]+"\"";
                     if (i2 < item.Count - 1)
                     {
@@ -174,11 +175,15 @@ namespace Localizator
                     i2++;
                 }
 
-                jsonText += "}";
+                jsonText += "\n  }";
                 
                 if (i < _locData.Count - 1)
                 {
-                    jsonText += ",";
+                    jsonText += ",\n";
+                }
+                else
+                {
+                    jsonText += "\n";
                 }
                 i++;
             }
