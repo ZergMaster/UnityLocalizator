@@ -77,11 +77,11 @@ namespace Localizator
             var texts = _locData["texts"];
             
             var itemSource = new object[texts.Count];
-            int i = 0;
+            int i = texts.Count-1;
             foreach (var key in texts.Keys)
             {
                 itemSource[i] = new {Key = key, Value = texts[key]};
-                i++;
+                i--;
             }
 
             ListBoxMain.ItemsSource = itemSource;
@@ -154,6 +154,33 @@ namespace Localizator
         }
 
         private void SaveLoc()
+        {
+            SaveJson();
+            SaveKeysCS();
+        }
+
+        private void SaveKeysCS()
+        {
+            string csText = "namespace Viktoriaplus.CyberCat.Localization {\n";
+            csText += "    public static class LocKeys {\n";
+            csText += "        public enum keys {\n";
+
+            var texts = _locData["texts"];
+            var i = 0;
+            foreach (var key in texts.Keys)
+            {
+                csText += "            "+key+" = "+i+",\n";
+                i++;
+            }
+
+            csText += "        }\n";
+            csText += "    }\n";
+            csText += "}";
+            
+            File.WriteAllText(_savedDir + "/Assets/Scripts/Localization/LocKeys.cs", csText);
+        }
+
+        private void SaveJson()
         {
             string jsonText = "{\n";
 
