@@ -6,6 +6,7 @@ using System.Configuration;
 using System.IO;
 using Newtonsoft.Json;
 using MessageBox = System.Windows.MessageBox;
+using MessageBoxOptions = System.Windows.MessageBoxOptions;
 
 namespace Localizator
 {
@@ -109,7 +110,28 @@ namespace Localizator
                 return;
             }
 
-            _locData["texts"].Add(_addDialogWindow.Key, _addDialogWindow.Value);
+            
+            if (!_locData["texts"].ContainsKey(_addDialogWindow.Key))
+            {
+                _locData["texts"].Add(_addDialogWindow.Key, _addDialogWindow.Value);
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Ключ { " + _addDialogWindow.Key + " } уже существует в локализации\nсо значением { " +
+                    _locData["texts"][_addDialogWindow.Key] + " }! \nТы хорошо подумал, что хочешь его перезаписать?!",
+                    "Ключ уже существует", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        _locData["texts"].Remove(_addDialogWindow.Key);
+                        _locData["texts"].Add(_addDialogWindow.Key, _addDialogWindow.Value);
+                        break;
+                    default:
+                        return;
+                }
+            }
 
             SaveLoc();
             InitData();
