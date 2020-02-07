@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
 using System.Configuration;
@@ -182,18 +181,16 @@ namespace Localizator
         private void SaveKeysCS()
         {
             string csText = "namespace Viktoriaplus.CyberCat.Localization {\n";
-            csText += "    public static class LocKeys {\n";
-            csText += "        public enum keys {\n";
+            csText += "    public enum LocKeys {\n";
 
             var texts = _locData["texts"];
             var i = 0;
             foreach (var key in texts.Keys)
             {
-                csText += "            "+key+" = "+i+",\n";
+                csText += "        "+key+" = "+i+",\n";
                 i++;
             }
 
-            csText += "        }\n";
             csText += "    }\n";
             csText += "}";
             
