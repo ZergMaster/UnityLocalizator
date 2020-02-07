@@ -113,7 +113,7 @@ namespace Localizator
             
             if (!_locData["texts"].ContainsKey(_addDialogWindow.Key))
             {
-                _locData["texts"].Add(_addDialogWindow.Key, _addDialogWindow.Value);
+                _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.Value);
             }
             else
             {
@@ -126,7 +126,7 @@ namespace Localizator
                 {
                     case MessageBoxResult.OK:
                         _locData["texts"].Remove(_addDialogWindow.Key);
-                        _locData["texts"].Add(_addDialogWindow.Key, _addDialogWindow.Value);
+                        _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.Value);
                         break;
                     default:
                         return;
@@ -172,6 +172,30 @@ namespace Localizator
 
                 InitData();
             }
+        }
+
+        private string SpaceToCamelCase(string value)
+        {
+            string result = "";
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                char ch = value[i];
+                if (!char.IsSeparator(ch))
+                {
+                    result += value[i];
+                }
+                else
+                {
+                    i++;
+                    if (i<value.Length)
+                    {
+                        result += char.ToUpper(value[i]);
+                    }
+                }
+            }
+
+            return result;
         }
 
         private void SaveLoc()
