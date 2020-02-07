@@ -63,6 +63,8 @@ namespace Localizator
         }
         bool IsGood(char c)
         {
+            if (c == ' ')
+                return false;
             if (c >= '0' && c <= '9')
                 return true;
             return IsGoodFirst(c);

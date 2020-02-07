@@ -63,7 +63,7 @@ namespace Localizator
             if (_savedDir != null)
             {
                 var jsonData = File.ReadAllText(_savedDir + "/Assets/StreamingAssets/Localization/ru.json");
-                _locData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
+                _locData = @JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Localizator
             int i = texts.Count-1;
             foreach (var key in texts.Keys)
             {
-                itemSource[i] = new {Key = key, Value = texts[key]};
+                itemSource[i] = new {Key = key, Value = @""+texts[key]};
                 i--;
             }
 
@@ -233,7 +233,8 @@ namespace Localizator
                 foreach (var key2 in item.Keys)
                 {
                     jsonText += "\n    ";
-                    jsonText += "\""+key2+"\":\""+@item[key2].Replace("\"", "\\\"")+"\"";
+                    var it = item[key2].Replace("\"", "\\\"").Replace("\n", "\\n");
+                    jsonText += "\""+key2+"\":\""+it+"\"";
                     if (i2 < item.Count - 1)
                     {
                         jsonText += ",";
