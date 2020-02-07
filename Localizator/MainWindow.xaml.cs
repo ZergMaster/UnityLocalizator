@@ -157,6 +157,26 @@ namespace Localizator
         {
             SaveJson();
             SaveKeysCS();
+            SaveLocDataTextsCS();
+        }
+
+        private void SaveLocDataTextsCS()
+        {
+            string csText = "using System;\n\n";
+            csText += "namespace Viktoriaplus.CyberCat.Localization {\n";
+            csText += "    [Serializable]\n";
+            csText += "    public class LocDataTexts {\n";
+            
+            var texts = _locData["texts"];
+            foreach (var key in texts.Keys)
+            {
+                csText += "        public string "+key+";\n";
+            }
+
+            csText += "    }\n";
+            csText += "}\n";
+            
+            File.WriteAllText(_savedDir + "/Assets/Scripts/Localization/LocDataTexts.cs", csText);
         }
 
         private void SaveKeysCS()
