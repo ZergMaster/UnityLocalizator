@@ -36,6 +36,7 @@ namespace Localizator
 
             PathButton.Click += PathButtonHandler;
             AddButton.Click += AddButtonHandler;
+            RefreshButton.Click += RefreshButtonHandler;
 
             InitData();
         }
@@ -135,6 +136,14 @@ namespace Localizator
 
             SaveLoc();
             InitData();
+        }
+
+        private void RefreshButtonHandler(object sender, RoutedEventArgs e)
+        {
+            InitData();
+            SaveLoc();
+
+            MessageBox.Show("Все ресурсы обновлены!!", "Камплит", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
         private void PathButtonHandler(object sender, RoutedEventArgs e)
         {
