@@ -3,7 +3,6 @@ D:\Prog\Localizator\Localizator\Localizator\bin\Release\Localizator.exe
 D:\Prog\Localizator\Localizator\Localizator\bin\Release\Localizator.pdb
 D:\Prog\Localizator\Localizator\Localizator\bin\Release\Newtonsoft.Json.dll
 D:\Prog\Localizator\Localizator\Localizator\bin\Release\Newtonsoft.Json.xml
-D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csprojAssemblyReference.cache
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\AddDialogWindow.g.cs
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\MainWindow.g.cs
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\App.g.cs
@@ -14,6 +13,6 @@ D:\Prog\Localizator\Localizator\Localizator\obj\Release\MainWindow.baml
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.g.resources
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.Properties.Resources.resources
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csproj.GenerateResource.cache
-D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csproj.CopyComplete
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.exe
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.pdb
+D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csprojResolveAssemblyReference.cache

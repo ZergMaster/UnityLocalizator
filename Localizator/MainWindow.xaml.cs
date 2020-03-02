@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
+using System.Windows.Input;
 using Newtonsoft.Json;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxOptions = System.Windows.MessageBoxOptions;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace Localizator
 {
@@ -16,6 +19,8 @@ namespace Localizator
 
         private string _savedDir="";
         private Dictionary<string, Dictionary<string, string>> _locData;
+
+        private ContextMenuStrip _collectionRoundMenuStrip;
 
         private readonly Configuration _config = ConfigurationManager.OpenExeConfiguration(
             System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -81,11 +86,73 @@ namespace Localizator
             int i = texts.Count-1;
             foreach (var key in texts.Keys)
             {
-                itemSource[i] = new {Key = key, Value = @""+texts[key]};
+                itemSource[i] = new Dictionary<string, string>() { {key, @""+texts[key]} };
                 i--;
             }
 
             ListBoxMain.ItemsSource = itemSource;
+
+            AddContextMenu();
+        }
+
+        private void AddContextMenu()
+        {
+            var toolStripMenuItem1 = new ToolStripMenuItem {Text = "Удалить"};
+            toolStripMenuItem1.Click += RemoveItemClickHandler;
+            var toolStripMenuItem2 = new ToolStripMenuItem {Text = "Изменить"};
+            toolStripMenuItem2.Click += ChangeItemClickHandler;
+
+            _collectionRoundMenuStrip = new ContextMenuStrip();
+            _collectionRoundMenuStrip.Items.AddRange(new ToolStripItem[] {toolStripMenuItem1, toolStripMenuItem2 });
+            ListBoxMain.MouseUp += RightMouseHandler;
+        }
+
+        private void RemoveItemClickHandler(object sender, EventArgs  e)
+        {
+            Dictionary<string, string> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, string>;
+
+            foreach (KeyValuePair<string, string> kvp in selectedDict)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Уверен, что хочешь удалить ключ { " + kvp.Key + " }\nсо значением { " +
+                    _locData["texts"][kvp.Key] + " }?!",
+                    "Удаление ключа", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        _locData["texts"].Remove(kvp.Key);
+                        SaveLoc();
+                        InitData();
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+        
+        private void ChangeItemClickHandler(object sender, EventArgs  e)
+        {
+            _addDialogWindow = new AddDialogWindow {Owner = this};
+            _addDialogWindow.Closed += AddDialogHandler;
+
+            Dictionary<string, string> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, string>;
+            foreach (KeyValuePair<string, string> kvp in selectedDict)
+            {
+                _addDialogWindow.KeyBox.Text = kvp.Key;
+                _addDialogWindow.ValueBox.Text = kvp.Value;
+            }
+
+            _addDialogWindow.ShowDialog();
+        }
+
+        private void RightMouseHandler(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                _collectionRoundMenuStrip.Show(System.Windows.Forms.Cursor.Position);
+                _collectionRoundMenuStrip.Visible = true;
+            }
         }
 
         private void AddButtonHandler(object sender, RoutedEventArgs e)
@@ -291,6 +358,17 @@ namespace Localizator
             jsonText += "}";
             
             File.WriteAllText(_savedDir + "/Assets/StreamingAssets/Localization/ru.json", jsonText);
+        }
+    }
+
+    class TableItemSource
+    {
+        public string Key;
+        public string Value;
+        public TableItemSource(string key, string value)
+        {
+            Key = key;
+            Value = value;
         }
     }
 }

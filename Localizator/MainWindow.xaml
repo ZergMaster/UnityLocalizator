@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Localizator"
         mc:Ignorable="d"
-        Title="CyberCatLocalizator" Height="500" Width="800"
+        Title="CyberCatLocalizator" Height="750" Width="1500"
         ResizeMode="CanResizeWithGrip"
         >
     <Grid Background="Ivory">
@@ -19,7 +19,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
@@ -43,7 +43,7 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="250"></ColumnDefinition>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
