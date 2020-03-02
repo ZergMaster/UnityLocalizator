@@ -15,4 +15,5 @@ D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.Properties.R
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csproj.GenerateResource.cache
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.exe
 D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.pdb
-D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csprojResolveAssemblyReference.cache
+D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csprojAssemblyReference.cache
+D:\Prog\Localizator\Localizator\Localizator\obj\Release\Localizator.csproj.CopyComplete

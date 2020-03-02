@@ -141,6 +141,8 @@ namespace Localizator
             {
                 _addDialogWindow.KeyBox.Text = kvp.Key;
                 _addDialogWindow.ValueBox.Text = kvp.Value;
+                
+                _locData["texts"].Remove(kvp.Key);
             }
 
             _addDialogWindow.ShowDialog();
