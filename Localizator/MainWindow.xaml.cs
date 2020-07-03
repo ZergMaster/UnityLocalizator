@@ -19,6 +19,7 @@ namespace Localizator
 
         private string _savedDir="";
         private Dictionary<string, Dictionary<string, string>> _locData;
+        private Dictionary<string, Dictionary<string, string>> _locDataEN;
 
         private ContextMenuStrip _collectionRoundMenuStrip;
 
@@ -70,6 +71,9 @@ namespace Localizator
             {
                 var jsonData = File.ReadAllText(_savedDir + "/Assets/StreamingAssets/Localization/ru.json");
                 _locData = @JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
+
+                var jsonDataEN = File.ReadAllText(_savedDir + "/Assets/StreamingAssets/Localization/en.json");
+                _locDataEN = @JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonDataEN);
             }
         }
 
@@ -81,12 +85,22 @@ namespace Localizator
             }
 
             var texts = _locData["texts"];
-            
+            var textsEN = _locDataEN["texts"];
+
             var itemSource = new object[texts.Count];
             int i = texts.Count-1;
+
+            foreach (string key in textsEN.Keys)
+            {
+                if (texts.ContainsKey(key)) continue;
+
+                Console.WriteLine(" UNIQUE KEY ====> "+key);
+            }
+
             foreach (var key in texts.Keys)
             {
                 itemSource[i] = new Dictionary<string, string>() { {key, @""+texts[key]} };
+                itemSource[i] = new {Key = key, ValueRU = @""+texts[key], ValueEN = @"" + textsEN[key]};
                 i--;
             }
 
@@ -140,7 +154,7 @@ namespace Localizator
             foreach (KeyValuePair<string, string> kvp in selectedDict)
             {
                 _addDialogWindow.KeyBox.Text = kvp.Key;
-                _addDialogWindow.ValueBox.Text = kvp.Value;
+                _addDialogWindow.ValueRuBox.Text = kvp.Value;
                 
                 _locData["texts"].Remove(kvp.Key);
             }
@@ -173,17 +187,25 @@ namespace Localizator
                 return;
             }
             
-            if ((_addDialogWindow.Value == "")||(_addDialogWindow.Value == null))
+            if ((_addDialogWindow.ValueRU == "")||(_addDialogWindow.ValueRU == null))
             {
-                MessageBox.Show("Поле Значение не может быть пустым", "", MessageBoxButton.OK,
+                MessageBox.Show("Поле Значение RU не может быть пустым", "", MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 return;
             }
 
-            
+            if ((_addDialogWindow.ValueEN == "") || (_addDialogWindow.ValueEN == null))
+            {
+                MessageBox.Show("Поле Значение EN не может быть пустым", "", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+
             if (!_locData["texts"].ContainsKey(_addDialogWindow.Key))
             {
-                _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.Value);
+                _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.ValueRU);
+                _locDataEN["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.ValueEN);
             }
             else
             {
@@ -196,7 +218,9 @@ namespace Localizator
                 {
                     case MessageBoxResult.OK:
                         _locData["texts"].Remove(_addDialogWindow.Key);
-                        _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.Value);
+                        _locData["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.ValueRU);
+                        _locDataEN["texts"].Remove(_addDialogWindow.Key);
+                        _locDataEN["texts"].Add(SpaceToCamelCase(_addDialogWindow.Key), _addDialogWindow.ValueEN);
                         break;
                     default:
                         return;
@@ -323,20 +347,27 @@ namespace Localizator
 
         private void SaveJson()
         {
+            SaveJsonLang("ru", _locData);
+            SaveJsonLang("en", _locDataEN);
+
+        }
+
+        private void SaveJsonLang(string lang, Dictionary<string, Dictionary<string, string>> locData)
+        {
             string jsonText = "{\n";
 
             var i = 0;
-            foreach (var key1 in _locData.Keys)
+            foreach (var key1 in locData.Keys)
             {
-                jsonText += "  \""+key1+"\": {";
+                jsonText += "  \"" + key1 + "\": {";
 
                 var i2 = 0;
-                var item = _locData[key1];
+                var item = locData[key1];
                 foreach (var key2 in item.Keys)
                 {
                     jsonText += "\n    ";
                     var it = item[key2].Replace("\"", "\\\"").Replace("\n", "\\n");
-                    jsonText += "\""+key2+"\":\""+it+"\"";
+                    jsonText += "\"" + key2 + "\":\"" + it + "\"";
                     if (i2 < item.Count - 1)
                     {
                         jsonText += ",";
@@ -345,21 +376,20 @@ namespace Localizator
                 }
 
                 jsonText += "\n  }";
-                
-                if (i < _locData.Count - 1)
+
+                if (i < locData.Count - 1)
                 {
                     jsonText += ",\n";
-                }
-                else
+                } else
                 {
                     jsonText += "\n";
                 }
                 i++;
             }
-            
+
             jsonText += "}";
-            
-            File.WriteAllText(_savedDir + "/Assets/StreamingAssets/Localization/ru.json", jsonText);
+
+            File.WriteAllText(_savedDir + "/Assets/StreamingAssets/Localization/"+ lang + ".json", jsonText);
         }
     }
 

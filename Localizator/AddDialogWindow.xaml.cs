@@ -8,7 +8,8 @@ namespace Localizator
     public partial class AddDialogWindow : Window
     {
         public string Key;
-        public string Value;
+        public string ValueRU;
+        public string ValueEN;
         public AddDialogWindow()
         {
             InitializeComponent();
@@ -22,7 +23,8 @@ namespace Localizator
         {
             //Owner.AddWindowData = { Key: "Хуй", Value: "Моржоыый"}
             Key = KeyBox.Text;
-            Value = ValueBox.Text;
+            ValueRU = ValueRuBox.Text;
+            ValueEN = ValueEnBox.Text;
             DialogResult = true;
         }
 

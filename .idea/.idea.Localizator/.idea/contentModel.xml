@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\FlashComp\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\FlashComp\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Localizator.-1635403018.00" t="ExcludeRecursive" />
-    <e p="D:\Prog\Localizator\Localizator" t="IncludeFlat">
+    <e p="C:\Users\User\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\User\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Localizator.-336817122.00" t="ExcludeRecursive" />
+    <e p="D:\Proj\ViktoriaPlus\cubercat\UnityLocalizator" t="IncludeFlat">
       <e p="Localizator" t="IncludeRecursive">
         <e p="AddDialogWindow.xaml" t="Include" />
         <e p="AddDialogWindow.xaml.cs" t="Include" />

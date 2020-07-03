@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Localizator"
         mc:Ignorable="d"
-        Title="CyberCatLocalizator" Height="750" Width="1500"
+        Title="CyberCatLocalizator" Height="700" Width="1150"
         ResizeMode="CanResizeWithGrip"
         >
     <Grid Background="Ivory">
@@ -19,9 +19,9 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="22"></RowDefinition>
@@ -35,6 +35,7 @@
         
         <TextBlock Grid.Column="0" Grid.Row="2">Ключ</TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="2">Значение RU</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="2">Значение EN</TextBlock>
         <Button x:Name="AddButton" Content="Add" Grid.Column="2" Grid.Row="1" ToolTip="Добавить ключ-значение в локализацию"></Button>
         <Button x:Name="RefreshButton" Content="Refresh" Grid.Column="0" Grid.Row="1" ToolTip="Обновить список"></Button>
         
@@ -43,15 +44,17 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="250"></ColumnDefinition>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="500"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{Binding Key}" Grid.Row="0" Grid.Column="0"/>
-                        <TextBlock Text="{Binding Value}" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock Text="{Binding ValueRU}" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock Text="{Binding ValueEN}" Grid.Row="0" Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
