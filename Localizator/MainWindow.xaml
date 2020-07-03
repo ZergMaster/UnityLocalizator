@@ -53,8 +53,8 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{Binding Key}" Grid.Row="0" Grid.Column="0"/>
-                        <TextBlock Text="{Binding ValueRU}" Grid.Row="0" Grid.Column="1"/>
-                        <TextBlock Text="{Binding ValueEN}" Grid.Row="0" Grid.Column="2"/>
+                        <TextBlock Text="{Binding Value[0]}" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock Text="{Binding Value[1]}" Grid.Row="0" Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -87,7 +87,7 @@ namespace Localizator
             var texts = _locData["texts"];
             var textsEN = _locDataEN["texts"];
 
-            var itemSource = new object[texts.Count];
+            Dictionary<string, List<string>>[]  itemSource = new Dictionary<string, List<string>>[texts.Count];
             int i = texts.Count-1;
 
             foreach (string key in textsEN.Keys)
@@ -99,8 +99,10 @@ namespace Localizator
 
             foreach (var key in texts.Keys)
             {
-                itemSource[i] = new Dictionary<string, string>() { {key, @""+texts[key]} };
-                itemSource[i] = new {Key = key, ValueRU = @""+texts[key], ValueEN = @"" + textsEN[key]};
+                //itemSource[i] = new Dictionary<string, string>() { {key, @""+texts[key]} };
+                //itemSource[i] = new {Key = key, ValueRU = @""+texts[key], ValueEN = @"" + textsEN[key]};
+
+                itemSource[i] = new Dictionary<string, List<string>>() { { key, new List<string> { @"" + texts[key], @"" + textsEN[key] } } };
                 i--;
             }
 
@@ -123,9 +125,9 @@ namespace Localizator
 
         private void RemoveItemClickHandler(object sender, EventArgs  e)
         {
-            Dictionary<string, string> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, string>;
+            Dictionary<string, List<string>> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, List<string>>;
 
-            foreach (KeyValuePair<string, string> kvp in selectedDict)
+            foreach (KeyValuePair<string, List<string>> kvp in selectedDict)
             {
                 MessageBoxResult result = MessageBox.Show(
                     "Уверен, что хочешь удалить ключ { " + kvp.Key + " }\nсо значением { " +
@@ -136,6 +138,7 @@ namespace Localizator
                 {
                     case MessageBoxResult.OK:
                         _locData["texts"].Remove(kvp.Key);
+                        _locDataEN["texts"].Remove(kvp.Key);
                         SaveLoc();
                         InitData();
                         break;
@@ -150,13 +153,15 @@ namespace Localizator
             _addDialogWindow = new AddDialogWindow {Owner = this};
             _addDialogWindow.Closed += AddDialogHandler;
 
-            Dictionary<string, string> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, string>;
-            foreach (KeyValuePair<string, string> kvp in selectedDict)
+            Dictionary<string, List<string>> selectedDict = ListBoxMain.SelectedItem as Dictionary<string, List<string>>;
+            foreach (KeyValuePair<string, List<string>> kvp in selectedDict)
             {
                 _addDialogWindow.KeyBox.Text = kvp.Key;
-                _addDialogWindow.ValueRuBox.Text = kvp.Value;
-                
+                _addDialogWindow.ValueRuBox.Text = kvp.Value[0];
+                _addDialogWindow.ValueEnBox.Text = kvp.Value[1];
+
                 _locData["texts"].Remove(kvp.Key);
+                _locDataEN["texts"].Remove(kvp.Key);
             }
 
             _addDialogWindow.ShowDialog();
