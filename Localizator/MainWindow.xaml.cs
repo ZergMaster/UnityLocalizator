@@ -53,7 +53,7 @@ namespace Localizator
             {
                 GetJson();
             }
-            catch (Exception exception)
+            catch
             {
                 MessageBox.Show(
                     "Локализация ru.json по адресу " + _savedDir +
