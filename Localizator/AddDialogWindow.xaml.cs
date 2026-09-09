@@ -21,7 +21,6 @@ namespace Localizator
 
         private void OkButtonHandler(object sender, RoutedEventArgs e)
         {
-            //Owner.AddWindowData = { Key: "Хуй", Value: "Моржоыый"}
             Key = KeyBox.Text;
             ValueRU = ValueRuBox.Text;
             ValueEN = ValueEnBox.Text;
